@@ -6,7 +6,6 @@ data class User(
     @SerializedName("login")
     val login: String,
 
-    @SerializedName("id")
     val id: Int,
 
     @SerializedName("node_id")
@@ -18,7 +17,6 @@ data class User(
     @SerializedName("gravatar_id")
     val gravatarId: String,
 
-    @SerializedName("url")
     val url: String,
 
     @SerializedName("html_url")
@@ -51,7 +49,6 @@ data class User(
     @SerializedName("received_events_url")
     val receivedEventsUrl: String,
 
-    @SerializedName("type")
     val type: String,
 
     @SerializedName("user_view_type")
