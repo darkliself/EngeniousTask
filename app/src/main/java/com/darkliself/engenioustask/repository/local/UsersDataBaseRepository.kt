@@ -8,7 +8,7 @@ import javax.inject.Inject
 class UsersDataBaseRepository @Inject constructor(
     private val usersDao: UsersDao
 ) : UsersLocalRepository {
-    override fun getUser(): Flow<List<UserEntity>> {
+    override fun getUsers(): Flow<List<UserEntity>> {
         return usersDao.getUsers()
     }
 
