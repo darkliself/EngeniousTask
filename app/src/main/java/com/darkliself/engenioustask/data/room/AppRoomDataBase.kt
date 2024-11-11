@@ -1,9 +1,7 @@
 package com.darkliself.engenioustask.data.room
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import com.darkliself.engenioustask.data.room.dao.UsersDao
 import com.darkliself.engenioustask.data.room.entity.UserEntity
 
@@ -12,7 +10,7 @@ import com.darkliself.engenioustask.data.room.entity.UserEntity
         UserEntity::class,
     ],
     exportSchema = true,
-    version = 2
+    version = 1
 )
 
 abstract class AppRoomDataBase : RoomDatabase() {
