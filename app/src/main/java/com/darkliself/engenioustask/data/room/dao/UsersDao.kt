@@ -1,5 +1,6 @@
 package com.darkliself.engenioustask.data.room.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 interface UsersDao {
     @Query("SELECT * FROM user_table")
     fun getUsers(): Flow<List<UserEntity>>
+
+    @Query("SELECT * FROM user_table")
+    fun getUsersPagingSource(): PagingSource<Int, UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addUser(user: UserEntity)
