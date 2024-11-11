@@ -14,19 +14,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.darkliself.engenioustask.ui.screens.mainscreen.MainScreenViewModel
+import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSource
+import com.darkliself.engenioustask.ui.screens.mainscreen.MainScreenTestViewModel
 import com.darkliself.engenioustask.ui.theme.EngeniousTaskTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var connectivityManagerDataSource: ConnectivityManagerDataSource
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        CoroutineScope(Dispatchers.IO).launch {
+//            connectivityManagerDataSource.isActive.collect {
+//                Log.d("ConnectivityManagerDataSource", "state is $it")
+//            }
+//        }
+
         enableEdgeToEdge()
         setContent {
             EngeniousTaskTheme {
@@ -43,9 +56,24 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val viewModel = hiltViewModel<MainScreenViewModel>()
+    val viewModel = hiltViewModel<MainScreenTestViewModel>()
     val users = viewModel.usersData.collectAsLazyPagingItems()
-    Column(modifier = Modifier.fillMaxSize()) {
+//    val isOnline = viewModel.connectionState.collectAsState(false).value
+
+//    if (users.itemCount == 0) {
+//        Box(modifier = Modifier.fillMaxSize().zIndex(2f)) {
+//            CircularProgressIndicator(modifier = Modifier.size(300.dp, 300.dp))
+//        }
+//    }
+
+    LaunchedEffect(users) {
+        Log.d("users", "${users.itemCount}")
+    }
+
+
+
+
+    Column(modifier = Modifier.fillMaxSize().zIndex(1f)) {
         Text(
             text = "Hello $name!",
             modifier = modifier
