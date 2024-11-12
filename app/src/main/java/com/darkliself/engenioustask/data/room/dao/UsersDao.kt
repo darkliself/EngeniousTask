@@ -20,7 +20,7 @@ interface UsersDao {
     @Query("SELECT * FROM user_table")
     fun getUsersPagingSource(): PagingSource<Int, UserEntity>
 
-    @Query("SELECT * FROM user_table WHERE login LIKE '%' || :login || '%' ORDER BY id ASC")
+    @Query("SELECT * FROM user_table WHERE login LIKE '%' || :login || '%' ORDER BY login ASC")
     fun getUsersByLogin(login: String): PagingSource<Int, UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
