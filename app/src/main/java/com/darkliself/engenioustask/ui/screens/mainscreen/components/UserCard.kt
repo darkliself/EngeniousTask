@@ -20,7 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -38,7 +37,7 @@ fun UserCard(user: UserEntity, modifier: Modifier, shape: Shape, color: Color) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(ConstantSize.PADDING_DEFAULT)
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
