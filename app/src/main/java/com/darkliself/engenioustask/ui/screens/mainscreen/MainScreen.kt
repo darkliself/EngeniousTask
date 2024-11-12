@@ -58,8 +58,8 @@ fun MainScreen(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = query,
                 onValueChange = {
-                    query = it
-                    mainScreenViewModel.searchUserByLogin(it)
+                    query = it.trim()
+                    mainScreenViewModel.searchUserByLogin(query)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = usersList,
