@@ -1,6 +1,6 @@
 # Engenius Task
 
-This project is a simple Android application that pulls a list of users from the GitHub API and displays their names and pictures. It implements offline functionality, local data cache, and search capabilities.
+This project is a simple Android application that pulls a list of users from the GitHub API and displays their names and pictures. It implements offline functionality, local data storage, search capabilities, and follows the MVVM architecture pattern for better separation of concerns and scalability.
 
 ### Libraries Used
 
