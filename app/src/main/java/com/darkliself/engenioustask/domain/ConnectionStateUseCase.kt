@@ -1,4 +1,4 @@
-package com.darkliself.engenioustask.model
+package com.darkliself.engenioustask.domain
 
 import com.darkliself.engenioustask.data.connectivity.ConnectivityDataSource
 import kotlinx.coroutines.flow.Flow
