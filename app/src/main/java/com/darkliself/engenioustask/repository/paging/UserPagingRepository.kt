@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSource
-import com.darkliself.engenioustask.data.paging.UsersRemoteMediator
+import com.darkliself.engenioustask.data.paging.UserRemoteMediator
 import com.darkliself.engenioustask.data.retrofit.api.UserApiService
 import com.darkliself.engenioustask.data.room.AppRoomDataBase
 import com.darkliself.engenioustask.data.room.entity.UserEntity
@@ -16,29 +16,29 @@ import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class UsersPagingRepository @Inject constructor(
+class UserPagingRepository @Inject constructor(
     private val apiService: UserApiService,
     private val database: AppRoomDataBase,
     private val connectivityDataSource: ConnectivityManagerDataSource
-) {
+) : UserRepository {
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getUsers(): Flow<PagingData<UserEntity>> {
-        return connectivityDataSource.isActive
+    override fun getUsers(): Flow<PagingData<UserEntity>> {
+        return connectivityDataSource.isOnline
             .distinctUntilChanged()
             .flatMapLatest { isConnected ->
                 Pager(
                     config = PagingConfig(pageSize = PAGE_SIZE),
                     remoteMediator = if (isConnected)
-                        UsersRemoteMediator(apiService, database) else null,
-                    pagingSourceFactory = { database.usersDao.getUsersPagingSource() }
+                        UserRemoteMediator(apiService, database) else null,
+                    pagingSourceFactory = { database.userDao.getUsersPagingSource() }
                 ).flow
             }
     }
 
-    fun searchUsersByLogin(query: String): Flow<PagingData<UserEntity>> {
+    override fun searchUsersByLogin(query: String): Flow<PagingData<UserEntity>> {
         return Pager(
             config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = { if (query != "" ) database.usersDao.getUsersByLogin(query) else database.usersDao.getUsersPagingSource()}
+            pagingSourceFactory = { if (query != "") database.userDao.getUsersByLogin(query) else database.userDao.getUsersPagingSource() }
         ).flow
     }
 

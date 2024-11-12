@@ -1,6 +1,5 @@
 package com.darkliself.engenioustask.data.paging
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -12,14 +11,14 @@ import com.darkliself.engenioustask.data.room.AppRoomDataBase
 import com.darkliself.engenioustask.data.room.entity.UserEntity
 
 @OptIn(ExperimentalPagingApi::class)
-class UsersRemoteMediator(
+class UserRemoteMediator(
     private val apiService: UserApiService,
     private val database: AppRoomDataBase
 ) : RemoteMediator<Int, UserEntity>() {
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, UserEntity>): MediatorResult {
         return try {
-            val page = when (loadType) {
+            when (loadType) {
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
@@ -29,15 +28,12 @@ class UsersRemoteMediator(
             }
 
             val response = apiService.getUsers().map { it.toUserEntity() }
-            if (response.isEmpty()) {
-                Log.d("response", "API rate limit exceeded")
-            }
-            Log.d("response", "$response")
+
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    database.usersDao.nukeTable()
+                    database.userDao.nukeTable()
                 }
-                database.usersDao.addUsers(response)
+                database.userDao.addUsers(response)
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
