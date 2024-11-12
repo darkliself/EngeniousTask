@@ -1,5 +1,6 @@
 package com.darkliself.engenioustask.data.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -28,7 +29,10 @@ class UsersRemoteMediator(
             }
 
             val response = apiService.getUsers().map { it.toUserEntity() }
-
+            if (response.isEmpty()) {
+                Log.d("response", "API rate limit exceeded")
+            }
+            Log.d("response", "$response")
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     database.usersDao.nukeTable()
@@ -36,7 +40,7 @@ class UsersRemoteMediator(
                 database.usersDao.addUsers(response)
             }
 
-            MediatorResult.Success(endOfPaginationReached = response.isEmpty())
+            MediatorResult.Success(endOfPaginationReached = true)
         } catch (e: Exception) {
             MediatorResult.Error(e)
         }
