@@ -18,6 +18,7 @@ import javax.inject.Singleton
 interface ConnectivityModule {
     @Binds
     fun bindConnectivityManagerDataSource(connectivityManagerDataSource: ConnectivityManagerDataSource): ConnectivityDataSource
+
     companion object {
         @Provides
         @Singleton
