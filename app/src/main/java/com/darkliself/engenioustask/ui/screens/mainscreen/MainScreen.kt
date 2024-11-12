@@ -26,8 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.darkliself.engenioustask.core.Constants
-import com.darkliself.engenioustask.core.TextConstants
+import com.darkliself.engenioustask.core.ConstantSize
+import com.darkliself.engenioustask.core.ConstantText
 import com.darkliself.engenioustask.ui.screens.mainscreen.components.UserCard
 import com.darkliself.engenioustask.ui.theme.darkGreen
 import com.darkliself.engenioustask.ui.theme.mediumGreen
@@ -53,13 +53,13 @@ fun MainScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(Constants.PADDING_DEFAULT)
+                .padding(ConstantSize.PADDING_DEFAULT)
         ) {
             OutlinedTextField(
                 value = query,
                 onValueChange = {
-                    query = it
-                    mainScreenViewModel.searchUserByLogin(it)
+                    query = it.trim()
+                    mainScreenViewModel.searchUserByLogin(query)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = usersList,
@@ -71,12 +71,12 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 },
                 placeholder = {
                     if (!isOnline && !usersList) {
-                        Text(TextConstants.SEARCH_DISABLE)
+                        Text(ConstantText.SEARCH_DISABLE)
                     }
                 }
             )
 
-            Spacer(modifier = Modifier.height(Constants.MEDIUM_SPACER_HEIGHT))
+            Spacer(modifier = Modifier.height(ConstantSize.MEDIUM_SPACER_HEIGHT))
 
             LazyColumn {
                 items(users.itemCount) {
@@ -84,12 +84,12 @@ fun MainScreen(modifier: Modifier = Modifier) {
                         UserCard(
                             elem, modifier = Modifier
                                 .fillMaxWidth()
-                                .height(height = Constants.USER_CARD_HEIGHT)
-                                .clip(RoundedCornerShape(Constants.CORNER_RADIUS_MEDIUM)),
-                            shape = RoundedCornerShape(Constants.CORNER_RADIUS_MEDIUM),
+                                .height(height = ConstantSize.USER_CARD_HEIGHT)
+                                .clip(RoundedCornerShape(ConstantSize.CORNER_RADIUS_MEDIUM)),
+                            shape = RoundedCornerShape(ConstantSize.CORNER_RADIUS_MEDIUM),
                             color = mintGreen
                         )
-                        Spacer(modifier = Modifier.height(Constants.CARD_SPACER))
+                        Spacer(modifier = Modifier.height(ConstantSize.CARD_SPACER))
                     }
                 }
             }

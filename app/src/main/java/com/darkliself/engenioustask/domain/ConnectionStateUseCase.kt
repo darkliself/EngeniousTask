@@ -8,6 +8,6 @@ class ConnectionStateUseCase @Inject constructor(
     private val connectivityDataSource: ConnectivityDataSource,
 ) {
     operator fun invoke(): Flow<Boolean> {
-        return connectivityDataSource.isActive
+        return connectivityDataSource.isOnline
     }
 }

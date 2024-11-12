@@ -3,9 +3,9 @@ package com.darkliself.engenioustask.di
 import android.content.Context
 import androidx.room.Room
 import com.darkliself.engenioustask.data.room.AppRoomDataBase
-import com.darkliself.engenioustask.data.room.dao.UsersDao
-import com.darkliself.engenioustask.repository.local.UsersDatabaseRepository
-import com.darkliself.engenioustask.repository.local.UsersLocalRepository
+import com.darkliself.engenioustask.data.room.dao.UserDao
+import com.darkliself.engenioustask.repository.local.UserDatabaseRepository
+import com.darkliself.engenioustask.repository.local.UserLocalRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 interface DatabaseModule {
 
     @Binds
-    fun bindUsersDatabaseRepository(usersDatabaseRepository: UsersDatabaseRepository): UsersLocalRepository
+    fun bindUsersDatabaseRepository(userDatabaseRepository: UserDatabaseRepository): UserLocalRepository
 
     companion object {
         @Provides
@@ -33,8 +33,8 @@ interface DatabaseModule {
         }
 
         @Provides
-        fun providePlantDao(appDatabase: AppRoomDataBase): UsersDao {
-            return appDatabase.usersDao
+        fun providePlantDao(appDatabase: AppRoomDataBase): UserDao {
+            return appDatabase.userDao
         }
     }
 }

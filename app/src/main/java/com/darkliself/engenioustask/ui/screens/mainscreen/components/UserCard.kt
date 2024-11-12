@@ -20,12 +20,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.darkliself.engenioustask.core.Constants
-import com.darkliself.engenioustask.core.TextConstants
+import com.darkliself.engenioustask.core.ConstantSize
+import com.darkliself.engenioustask.core.ConstantText
 import com.darkliself.engenioustask.data.room.entity.UserEntity
 
 @Composable
@@ -38,21 +37,21 @@ fun UserCard(user: UserEntity, modifier: Modifier, shape: Shape, color: Color) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(ConstantSize.PADDING_DEFAULT)
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(user.avatarUrl)
                     .crossfade(true)
                     .build(),
-                contentDescription = TextConstants.USER_CARD_CONTENT_DESCRIPTION + user.login,
+                contentDescription = ConstantText.USER_CARD_CONTENT_DESCRIPTION + user.login,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(Constants.CORNER_RADIUS_LARGE))
+                    .clip(RoundedCornerShape(ConstantSize.CORNER_RADIUS_LARGE))
                     .weight(1f),
             )
 
-            Spacer(modifier = Modifier.width(Constants.MEDIUM_SPACER_HEIGHT))
+            Spacer(modifier = Modifier.width(ConstantSize.MEDIUM_SPACER_HEIGHT))
 
             Text(
                 text = user.login,

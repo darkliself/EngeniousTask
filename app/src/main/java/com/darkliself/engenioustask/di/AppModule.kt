@@ -1,6 +1,9 @@
 package com.darkliself.engenioustask.di
 
 import com.darkliself.engenioustask.data.retrofit.api.UserApiService
+import com.darkliself.engenioustask.repository.paging.UserPagingRepository
+import com.darkliself.engenioustask.repository.paging.UserRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,20 +14,26 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-    private const val BASE_URL = "https://api.github.com/"
+interface AppModule {
 
-    @Provides
-    @Singleton
-    fun provideApi(builder: Retrofit.Builder): UserApiService {
-        return builder.build().create(UserApiService::class.java)
-    }
+    @Binds
+    fun bind(userPagingRepository: UserPagingRepository): UserRepository
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit.Builder {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+    companion object {
+        private const val BASE_URL = "https://api.github.com/"
+
+        @Provides
+        @Singleton
+        fun provideApi(builder: Retrofit.Builder): UserApiService {
+            return builder.build().create(UserApiService::class.java)
+        }
+
+        @Provides
+        @Singleton
+        fun provideRetrofit(): Retrofit.Builder {
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+        }
     }
 }
