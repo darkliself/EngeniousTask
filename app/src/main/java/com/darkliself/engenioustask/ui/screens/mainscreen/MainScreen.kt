@@ -1,62 +1,97 @@
 package com.darkliself.engenioustask.ui.screens.mainscreen
 
-import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.darkliself.engenioustask.core.Constants
+import com.darkliself.engenioustask.core.TextConstants
+import com.darkliself.engenioustask.ui.screens.mainscreen.components.UserCard
+import com.darkliself.engenioustask.ui.theme.darkGreen
+import com.darkliself.engenioustask.ui.theme.mediumGreen
+import com.darkliself.engenioustask.ui.theme.mintGreen
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
     var query by rememberSaveable { mutableStateOf("") }
-    val viewModel = hiltViewModel<MainScreenTestViewModel>()
-    val users = viewModel.userPagingData.collectAsLazyPagingItems()
-    var usersList  = viewModel.databaseIsNotEmpty.collectAsState().value
-    val isOnline = viewModel.isOnline.collectAsState(true).value
+    val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
+    val users = mainScreenViewModel.userPagingData.collectAsLazyPagingItems()
+    val usersList = mainScreenViewModel.databaseIsNotEmpty.collectAsState().value
+    val isOnline = mainScreenViewModel.isOnline.collectAsState(true).value
 
-    LaunchedEffect(isOnline) {
-        Log.d("databaseIsNotEmpty", usersList.toString())
-    }
-
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .zIndex(1f)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(mediumGreen, darkGreen)
+                )
+            )
     ) {
-        OutlinedTextField(
-            value = query,
-            onValueChange = {
-                query = it
-                viewModel.searchUserByLogin(it)
-            },
-            enabled = usersList,
-            placeholder = {
-                if (!isOnline && !usersList) {
-                    Text("Search will not work")
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(Constants.PADDING_DEFAULT)
+        ) {
+            OutlinedTextField(
+                value = query,
+                onValueChange = {
+                    query = it
+                    mainScreenViewModel.searchUserByLogin(it)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = usersList,
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = null,
+                    )
+                },
+                placeholder = {
+                    if (!isOnline && !usersList) {
+                        Text(TextConstants.SEARCH_DISABLE)
+                    }
                 }
-            }
-        )
+            )
 
-        LazyColumn() {
-            items(users.itemCount) {
-                Log.e("ItemCount", "${users.itemCount}")
-                Text(text = users[it]!!.login)
-                Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(Constants.MEDIUM_SPACER_HEIGHT))
+
+            LazyColumn {
+                items(users.itemCount) {
+                    users[it]?.let { elem ->
+                        UserCard(
+                            elem, modifier = Modifier
+                                .fillMaxWidth()
+                                .height(height = Constants.USER_CARD_HEIGHT)
+                                .clip(RoundedCornerShape(Constants.CORNER_RADIUS_MEDIUM)),
+                            shape = RoundedCornerShape(Constants.CORNER_RADIUS_MEDIUM),
+                            color = mintGreen
+                        )
+                        Spacer(modifier = Modifier.height(Constants.CARD_SPACER))
+                    }
+                }
             }
         }
     }
