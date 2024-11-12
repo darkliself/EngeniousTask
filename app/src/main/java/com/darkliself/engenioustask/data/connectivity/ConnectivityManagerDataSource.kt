@@ -14,7 +14,7 @@ class ConnectivityManagerDataSource @Inject constructor(
     private val connectivityManager: ConnectivityManager,
 ) : ConnectivityDataSource {
 
-    override val isActive: Flow<Boolean> = callbackFlow {
+    override val isOnline: Flow<Boolean> = callbackFlow {
 
         val callback = object : ConnectivityManager.NetworkCallback() {
 
