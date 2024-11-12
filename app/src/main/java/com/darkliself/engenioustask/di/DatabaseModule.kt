@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.darkliself.engenioustask.data.room.AppRoomDataBase
 import com.darkliself.engenioustask.data.room.dao.UsersDao
+import com.darkliself.engenioustask.repository.local.UsersDatabaseRepository
+import com.darkliself.engenioustask.repository.local.UsersLocalRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,19 +16,25 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseModule {
-    @Provides
-    @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): AppRoomDataBase {
-        return Room.databaseBuilder(
-            appContext,
-            AppRoomDataBase::class.java,
-            "engenious_db"
-        ).build()
-    }
+interface DatabaseModule {
 
-    @Provides
-    fun providePlantDao(appDatabase: AppRoomDataBase): UsersDao {
-        return appDatabase.usersDao
+    @Binds
+    fun bindUsersDatabaseRepository(usersDatabaseRepository: UsersDatabaseRepository): UsersLocalRepository
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideAppDatabase(@ApplicationContext appContext: Context): AppRoomDataBase {
+            return Room.databaseBuilder(
+                appContext,
+                AppRoomDataBase::class.java,
+                "engenious_db"
+            ).build()
+        }
+
+        @Provides
+        fun providePlantDao(appDatabase: AppRoomDataBase): UsersDao {
+            return appDatabase.usersDao
+        }
     }
 }
