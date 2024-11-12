@@ -27,11 +27,22 @@ class UsersPagingRepository @Inject constructor(
             .distinctUntilChanged()
             .flatMapLatest { isConnected ->
                 Pager(
-                    config = PagingConfig(pageSize = 20),
+                    config = PagingConfig(pageSize = PAGE_SIZE),
                     remoteMediator = if (isConnected)
                         UsersRemoteMediator(apiService, database) else null,
                     pagingSourceFactory = { database.usersDao.getUsersPagingSource() }
                 ).flow
             }
+    }
+
+    fun searchUsersByLogin(query: String): Flow<PagingData<UserEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = { if (query != "" ) database.usersDao.getUsersByLogin(query) else database.usersDao.getUsersPagingSource()}
+        ).flow
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 20
     }
 }
