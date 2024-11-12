@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,20 +57,6 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<MainScreenTestViewModel>()
     val users = viewModel.usersData.collectAsLazyPagingItems()
-//    val isOnline = viewModel.connectionState.collectAsState(false).value
-
-//    if (users.itemCount == 0) {
-//        Box(modifier = Modifier.fillMaxSize().zIndex(2f)) {
-//            CircularProgressIndicator(modifier = Modifier.size(300.dp, 300.dp))
-//        }
-//    }
-
-    LaunchedEffect(users) {
-        Log.d("users", "${users.itemCount}")
-    }
-
-
-
 
     Column(modifier = Modifier.fillMaxSize().zIndex(1f)) {
         Text(
