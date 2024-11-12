@@ -1,4 +1,4 @@
-package com.darkliself.engenioustask.repository
+package com.darkliself.engenioustask.repository.remote
 
 import com.darkliself.engenioustask.data.retrofit.model.User
 
