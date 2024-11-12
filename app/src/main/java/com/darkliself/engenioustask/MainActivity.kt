@@ -21,6 +21,7 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSource
+import com.darkliself.engenioustask.ui.screens.mainscreen.MainScreen
 import com.darkliself.engenioustask.ui.screens.mainscreen.MainScreenTestViewModel
 import com.darkliself.engenioustask.ui.theme.EngeniousTaskTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,18 +34,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        CoroutineScope(Dispatchers.IO).launch {
-//            connectivityManagerDataSource.isActive.collect {
-//                Log.d("ConnectivityManagerDataSource", "state is $it")
-//            }
-//        }
-
         enableEdgeToEdge()
         setContent {
             EngeniousTaskTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                Scaffold(modifier = Modifier.fillMaxSize().padding(top = 30.dp)) { innerPadding ->
+                    MainScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,7 +50,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<MainScreenTestViewModel>()
-    val users = viewModel.usersData.collectAsLazyPagingItems()
+    val users = viewModel.userPagingData.collectAsLazyPagingItems()
 
     Column(modifier = Modifier.fillMaxSize().zIndex(1f)) {
         Text(
