@@ -1,4 +1,4 @@
-package com.darkliself.engenioustask.repository.paging
+package com.darkliself.engenioustask.domain.repository
 
 import androidx.paging.PagingData
 import com.darkliself.engenioustask.data.room.entity.UserEntity

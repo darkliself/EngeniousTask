@@ -1,6 +1,6 @@
 package com.darkliself.engenioustask.data.retrofit.api
 
-import com.darkliself.engenioustask.data.retrofit.model.User
+import com.darkliself.engenioustask.domain.model.User
 import retrofit2.http.GET
 
 interface UserApiService {

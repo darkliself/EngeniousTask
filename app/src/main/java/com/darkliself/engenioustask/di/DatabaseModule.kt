@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.darkliself.engenioustask.data.room.AppRoomDataBase
 import com.darkliself.engenioustask.data.room.dao.UserDao
-import com.darkliself.engenioustask.repository.local.UserDatabaseRepository
-import com.darkliself.engenioustask.repository.local.UserLocalRepository
+import com.darkliself.engenioustask.data.repository.local.UserCountRepositoryImp
+import com.darkliself.engenioustask.domain.repository.UserCountRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 interface DatabaseModule {
 
     @Binds
-    fun bindUsersDatabaseRepository(userDatabaseRepository: UserDatabaseRepository): UserLocalRepository
+    fun bindUsersDatabaseRepository(userCountRepositoryImp: UserCountRepositoryImp): UserCountRepository
 
     companion object {
         @Provides

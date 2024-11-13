@@ -2,8 +2,8 @@ package com.darkliself.engenioustask.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.darkliself.engenioustask.data.connectivity.ConnectivityDataSource
 import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSource
+import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSourceImp
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 interface ConnectivityModule {
     @Singleton
     @Binds
-    fun bindConnectivityManagerDataSource(connectivityManagerDataSource: ConnectivityManagerDataSource): ConnectivityDataSource
+    fun bindConnectivityManagerDataSource(connectivityManagerDataSourceImp: ConnectivityManagerDataSourceImp): ConnectivityManagerDataSource
 
     companion object {
         @Provides
