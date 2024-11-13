@@ -16,6 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Suppress("kotlin:S6517")
 interface ConnectivityModule {
+    @Singleton
     @Binds
     fun bindConnectivityManagerDataSource(connectivityManagerDataSource: ConnectivityManagerDataSource): ConnectivityDataSource
 

@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.darkliself.engenioustask.data.connectivity.ConnectivityDataSource
 import com.darkliself.engenioustask.data.connectivity.ConnectivityManagerDataSource
 import com.darkliself.engenioustask.data.paging.UserRemoteMediator
 import com.darkliself.engenioustask.data.retrofit.api.UserApiService
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class UserPagingRepository @Inject constructor(
     private val apiService: UserApiService,
     private val database: AppRoomDataBase,
-    private val connectivityDataSource: ConnectivityManagerDataSource
+    private val connectivityDataSource: ConnectivityDataSource
 ) : UserRepository {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUsers(): Flow<PagingData<UserEntity>> {
