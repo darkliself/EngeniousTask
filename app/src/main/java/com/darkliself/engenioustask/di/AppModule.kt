@@ -1,8 +1,8 @@
 package com.darkliself.engenioustask.di
 
 import com.darkliself.engenioustask.data.retrofit.api.UserApiService
-import com.darkliself.engenioustask.repository.paging.UserPagingRepository
-import com.darkliself.engenioustask.repository.paging.UserRepository
+import com.darkliself.engenioustask.data.repository.paging.UserPagingRepositoryImp
+import com.darkliself.engenioustask.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 interface AppModule {
 
     @Binds
-    fun bind(userPagingRepository: UserPagingRepository): UserRepository
+    fun bind(userPagingRepositoryImp: UserPagingRepositoryImp): UserRepository
 
     companion object {
         private const val BASE_URL = "https://api.github.com/"

@@ -1,4 +1,4 @@
-package com.darkliself.engenioustask.data.retrofit.model
+package com.darkliself.engenioustask.domain.model
 
 import com.google.gson.annotations.SerializedName
 
